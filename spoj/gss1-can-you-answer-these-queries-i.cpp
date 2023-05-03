@@ -36,8 +36,11 @@ public:
 
     T get(size_t index1, size_t index2) const
     {
+        if (index1 == index2) return tree[index1 + base];
+
         index1 += base;
         index2 += base;
+
         T value1 = tree[index1];
         T value2 = tree[index2];
 
