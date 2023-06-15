@@ -5,24 +5,24 @@
 class Solution
 {
 public:
-    Solution(const uint& n) :
+    Solution(const unsigned& n) :
         adjacent(n),
         isMachine(n, false),
         status(n, Status::Unvisited)
     {}
     
-    void addEdge(const uint& node1, const uint& node2, const uint& weight)
+    void addEdge(const unsigned& node1, const unsigned& node2, const unsigned& weight)
     {
         adjacent[node1].emplace_back(node2, weight);
         adjacent[node2].emplace_back(node1, weight);
     }
     
-    void addMachine(const uint& machine)
+    void addMachine(const unsigned& machine)
     {
         isMachine[machine] = true;
     }
     
-    uint get()
+    unsigned get()
     {
         dfs(0, -1, 0);
         return minTime;
@@ -31,10 +31,10 @@ public:
 private:
     struct Node
     {
-        uint id;
-        uint weight;
+        unsigned id;
+        unsigned weight;
 
-        Node(const uint& id, const uint& weight) :
+        Node(const unsigned& id, const unsigned& weight) :
             id(id),
             weight(weight)
         {}
@@ -51,17 +51,17 @@ private:
     std::vector<std::vector<Node>> adjacent;
     std::vector<bool> isMachine;
     std::vector<Status> status;
-    uint minTime = 0;
+    unsigned minTime = 0;
 
-    uint dfs(const uint& index, const uint& previous, const uint& prevWeight)
+    unsigned dfs(const unsigned& index, const unsigned& previous, const unsigned& prevWeight)
     {   
-        std::vector<uint> threatMinCuts;
+        std::vector<unsigned> threatMinCuts;
 
         for (auto& neighbor : adjacent[index]) 
         {
             if (neighbor.id != previous)
             {
-                uint minCut = dfs(neighbor.id, index, neighbor.weight);
+                unsigned minCut = dfs(neighbor.id, index, neighbor.weight);
                 if (status[neighbor.id] == Status::Threat) threatMinCuts.push_back(minCut);
             }
         }
@@ -88,27 +88,27 @@ int main()
 {
     std::ios_base::sync_with_stdio(false);
     
-    uint nodes = 0;
+    unsigned nodes = 0;
     std::cin >> nodes;
     
     Solution solution(nodes);
     
-    uint machines = 0;
+    unsigned machines = 0;
     std::cin >> machines;
     
-    for (uint i = 1; i < nodes; ++i)
+    for (unsigned i = 1; i < nodes; ++i)
     {
-        uint node1 = 0;
-        uint node2 = 0;
-        uint weight = 0;
+        unsigned node1 = 0;
+        unsigned node2 = 0;
+        unsigned weight = 0;
         std::cin >> node1 >> node2 >> weight;
         
         solution.addEdge(node1, node2, weight);
     }
     
-    for (uint i = 0; i < machines; ++i)
+    for (unsigned i = 0; i < machines; ++i)
     {
-        uint machine = 0;
+        unsigned machine = 0;
         std::cin >> machine;
         
         solution.addMachine(machine);
